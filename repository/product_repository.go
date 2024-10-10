@@ -26,7 +26,21 @@ func NewProductRepository() ProductRepository {
 }
 
 func (p *productRepository) GetProductById(ctx context.Context, id int) (*models.Product, error) {
-	query := `SELECT id, title, description, category, image, price FROM products WHERE id=$1 LIMIT 1`
+	query := `
+		SELECT 
+			p.id, 
+			p.title, 
+			p.description, 
+			c.title AS category,
+			p.image, 
+			p.price 
+		FROM 
+			products p 
+		JOIN 
+			categories c ON p.category_id = c.id
+		WHERE 
+			p.id = $1 
+		LIMIT 1`
 	row := db.Pool.QueryRow(ctx, query, id)
 
 	var product models.Product
@@ -51,18 +65,26 @@ func (p *productRepository) GetProductById(ctx context.Context, id int) (*models
 }
 
 func (p *productRepository) GetAllProducts(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Product, error) {
-
-	// Base query
-	baseQuery := "SELECT id, title, description, category, image, price FROM products"
+	// Base query with JOIN to fetch category name
+	baseQuery := `
+		SELECT 
+			p.id, 
+			p.title, 
+			p.description, 
+			c.title AS category,
+			p.image, 
+			p.price 
+		FROM products p
+		JOIN categories c ON p.category_id = c.id`
 
 	qb := utils.NewQueryBuilder(baseQuery)
 
 	if title != "" {
-		qb.AddCondition("title ILIKE $%d", "%"+title+"%")
+		qb.AddCondition("p.title ILIKE $%d", "%"+title+"%")
 	}
 
 	if category != "" {
-		qb.AddCondition("category = $%d", category)
+		qb.AddCondition("c.title = $%d", category)
 	}
 
 	if limitStr != "" {
