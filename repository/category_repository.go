@@ -16,7 +16,7 @@ var ErrCategoryNotFound = errors.New("category not found")
 
 type CategoryRepository interface {
 	GetCategoryById(ctx context.Context, id int) (*models.Category, error)
-	GetAllCategories(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Category, error)
+	GetAllCategories(ctx context.Context, title, limitStr, sortBy string) ([]models.Category, error)
 }
 
 type categoryRepository struct{}
@@ -48,7 +48,7 @@ func (p *categoryRepository) GetCategoryById(ctx context.Context, id int) (*mode
 	return &category, nil
 }
 
-func (p *categoryRepository) GetAllCategories(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Category, error) {
+func (p *categoryRepository) GetAllCategories(ctx context.Context, title, limitStr, sortBy string) ([]models.Category, error) {
 
 	// Base query
 	baseQuery := "SELECT id, title, description, image FROM categories"
