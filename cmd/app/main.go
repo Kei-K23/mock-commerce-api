@@ -20,12 +20,17 @@ func main() {
 	defer db.Pool.Close()
 
 	// Setup product
+	categoryRepo := repository.NewCategoryRepository()
+	categoryService := services.NewCategoryService(categoryRepo)
+	categoryController := controllers.NewCategoryController(categoryService)
+
+	// Setup product
 	productRepo := repository.NewProductRepository()
 	productService := services.NewProductService(productRepo)
 	productController := controllers.NewProductController(productService)
 
 	// Get the router
-	r := routes.SetupRouter(productController)
+	r := routes.SetupRouter(productController, categoryController)
 
 	port := os.Getenv("PORT")
 	if port == "" {
