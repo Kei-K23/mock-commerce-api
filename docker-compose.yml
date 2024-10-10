@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: go_ecommerce_api_db
+    ports:
+      - "5432:5432"
