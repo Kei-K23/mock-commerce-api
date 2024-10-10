@@ -40,29 +40,13 @@ func (p *ProductController) GetProductById(c *gin.Context) {
 
 func (p *ProductController) GetAllProducts(c *gin.Context) {
 
-	products, err := p.service.GetAllProducts(c.Request.Context())
+	limitStr := c.Query("limit")
+	title := c.Query("title")
+	category := c.Query("category")
+	sortBy := c.Query("sort")
 
-	if err != nil {
-		if err == repository.ErrProductNotFound {
-			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-			return
-		}
+	products, err := p.service.GetAllProducts(c.Request.Context(), title, category, limitStr, sortBy)
 
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, products)
-}
-
-func (p *ProductController) GetAllProductsWithLimits(c *gin.Context) {
-	limit, err := strconv.ParseUint(c.Query("limit"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	products, err := p.service.GetAllProductsWithLimits(c.Request.Context(), limit)
 	if err != nil {
 		if err == repository.ErrProductNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
