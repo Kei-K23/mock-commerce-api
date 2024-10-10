@@ -11,6 +11,7 @@ import (
 type ProductService interface {
 	GetProductById(ctx context.Context, id int) (*models.Product, error)
 	GetAllProducts(ctx context.Context) ([]models.Product, error)
+	GetAllProductsWithLimits(ctx context.Context, limit uint64) ([]models.Product, error)
 }
 
 type productService struct {
@@ -35,6 +36,16 @@ func (p *productService) GetAllProducts(ctx context.Context) ([]models.Product, 
 	products, err := p.repo.GetAllProducts(ctx)
 	if err != nil {
 		log.Println("Error in GetAllProducts:", err)
+		return nil, err
+	}
+
+	return products, nil
+}
+
+func (p *productService) GetAllProductsWithLimits(ctx context.Context, limit uint64) ([]models.Product, error) {
+	products, err := p.repo.GetAllProductsWithLimits(ctx, limit)
+	if err != nil {
+		log.Println("Error in GetAllProductsWithLimits:", err)
 		return nil, err
 	}
 
