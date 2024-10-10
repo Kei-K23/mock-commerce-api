@@ -10,6 +10,7 @@ import (
 
 type ProductService interface {
 	GetProductById(ctx context.Context, id int) (*models.Product, error)
+	GetAllProducts(ctx context.Context) ([]models.Product, error)
 }
 
 type productService struct {
@@ -20,7 +21,6 @@ func NewProductService(repo repository.ProductRepository) ProductService {
 	return &productService{repo: repo}
 }
 
-// GetProductById implements ProductService.
 func (p *productService) GetProductById(ctx context.Context, id int) (*models.Product, error) {
 	product, err := p.repo.GetProductById(ctx, id)
 	if err != nil {
@@ -29,4 +29,14 @@ func (p *productService) GetProductById(ctx context.Context, id int) (*models.Pr
 	}
 
 	return product, nil
+}
+
+func (p *productService) GetAllProducts(ctx context.Context) ([]models.Product, error) {
+	products, err := p.repo.GetAllProducts(ctx)
+	if err != nil {
+		log.Println("Error in GetAllProducts:", err)
+		return nil, err
+	}
+
+	return products, nil
 }

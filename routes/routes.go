@@ -8,6 +8,7 @@ import (
 func SetupRouter(productController *controllers.ProductController) *gin.Engine {
 	r := gin.Default()
 
+	r.GET("/products", productController.GetAllProducts)
 	r.GET("/products/:id", productController.GetProductById)
 
 	return r
