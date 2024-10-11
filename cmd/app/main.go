@@ -19,18 +19,20 @@ func main() {
 	// Close the db connection when before main function out of scope
 	defer db.Pool.Close()
 
-	// Setup product
 	categoryRepo := repository.NewCategoryRepository()
 	categoryService := services.NewCategoryService(categoryRepo)
 	categoryController := controllers.NewCategoryController(categoryService)
 
-	// Setup product
 	productRepo := repository.NewProductRepository()
 	productService := services.NewProductService(productRepo)
 	productController := controllers.NewProductController(productService)
 
+	userRepo := repository.NewUserRepository()
+	userService := services.NewUserService(userRepo)
+	userController := controllers.NewUserController(userService)
+
 	// Get the router
-	r := routes.SetupRouter(productController, categoryController)
+	r := routes.SetupRouter(productController, categoryController, userController)
 
 	port := os.Getenv("PORT")
 	if port == "" {
