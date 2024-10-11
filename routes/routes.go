@@ -8,6 +8,8 @@ import (
 func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController) *gin.Engine {
 	r := gin.Default()
 
+	// Category routes
+	r.POST("/products", categoryController.CreateCategory)
 	r.GET("/categories", categoryController.GetAllProducts)
 	r.GET("/categories/:id", categoryController.GetCategoryById)
 

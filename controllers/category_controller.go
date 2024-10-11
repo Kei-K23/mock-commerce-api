@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Kei-K23/go-ecommerce-api/dto"
+	"github.com/Kei-K23/go-ecommerce-api/mapper"
 	"github.com/Kei-K23/go-ecommerce-api/repository"
 	"github.com/Kei-K23/go-ecommerce-api/services"
 	"github.com/gin-gonic/gin"
@@ -15,6 +17,24 @@ type CategoryController struct {
 
 func NewCategoryController(service services.CategoryService) *CategoryController {
 	return &CategoryController{service: service}
+}
+
+func (p *CategoryController) CreateCategory(c *gin.Context) {
+	var categoryRequest dto.CategoryRequest
+	if err := c.ShouldBindJSON(&categoryRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	category := mapper.MatchCategoryRequestToCategory(categoryRequest)
+
+	createdCategory, err := p.service.CreateCategory(c.Request.Context(), category)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, createdCategory)
 }
 
 func (p *CategoryController) GetCategoryById(c *gin.Context) {

@@ -19,6 +19,7 @@ func MatchProductRequestToProduct(req dto.ProductRequest) *models.Product {
 // MatchProductToProductRequest maps a Product model back to a ProductRequest DTO (optional)
 func MatchProductToProductRequest(product models.Product) *dto.ProductRequest {
 	return &dto.ProductRequest{
+		ID:          product.ID,
 		Title:       product.Title,
 		Description: product.Description,
 		Category:    product.Category,
