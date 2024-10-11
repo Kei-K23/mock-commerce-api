@@ -1,7 +1,6 @@
-package models
+package dto
 
-type Product struct {
-	ID          int     `json:"id"`
+type ProductRequest struct {
 	Title       string  `json:"title"`
 	Description *string `json:"description"`
 	Category    string  `json:"category"`

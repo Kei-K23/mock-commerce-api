@@ -12,6 +12,7 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 	r.GET("/categories/:id", categoryController.GetCategoryById)
 
 	// Product routes
+	r.POST("/products", productController.CreateProduct)
 	r.GET("/products", productController.GetAllProducts)
 	r.GET("/products/:id", productController.GetProductById)
 	return r

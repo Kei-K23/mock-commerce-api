@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Kei-K23/go-ecommerce-api/dto"
+	"github.com/Kei-K23/go-ecommerce-api/mapper"
 	"github.com/Kei-K23/go-ecommerce-api/repository"
 	"github.com/Kei-K23/go-ecommerce-api/services"
 	"github.com/gin-gonic/gin"
@@ -15,6 +17,24 @@ type ProductController struct {
 
 func NewProductController(service services.ProductService) *ProductController {
 	return &ProductController{service: service}
+}
+
+func (p *ProductController) CreateProduct(c *gin.Context) {
+	var productRequest dto.ProductRequest
+	if err := c.ShouldBindJSON(&productRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	product := mapper.MatchProductRequestToProduct(productRequest)
+
+	createdProduct, err := p.service.CreateProduct(c.Request.Context(), product)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, createdProduct)
 }
 
 func (p *ProductController) GetProductById(c *gin.Context) {
