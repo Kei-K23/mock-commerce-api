@@ -11,6 +11,7 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 	// Category routes
 	r.POST("/category", categoryController.CreateCategory)
 	r.PATCH("/categories/:id", categoryController.UpdateCategory)
+	r.PUT("/categories/:id", categoryController.UpdateCategory)
 	r.DELETE("/categories/:id", categoryController.DeleteCategory)
 	r.GET("/categories", categoryController.GetAllProducts)
 	r.GET("/categories/:id", categoryController.GetCategoryById)
@@ -18,6 +19,7 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 	// Product routes
 	r.POST("/products", productController.CreateProduct)
 	r.PATCH("/products/:id", productController.UpdateProduct)
+	r.PUT("/products/:id", productController.UpdateProduct)
 	r.DELETE("/products/:id", productController.DeleteProduct)
 	r.GET("/products", productController.GetAllProducts)
 	r.GET("/products/:id", productController.GetProductById)

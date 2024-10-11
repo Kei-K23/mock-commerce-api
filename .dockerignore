@@ -1,3 +1,8 @@
+.env
+.git
+.vscode
+.*ignore
+*.md
 *.exe
 *.exe~
 *.dll
@@ -6,6 +11,5 @@
 *.test
 *.out
 go.work
-.env
 bin/
 vendor/
