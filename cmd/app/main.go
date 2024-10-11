@@ -31,8 +31,12 @@ func main() {
 	userService := services.NewUserService(userRepo)
 	userController := controllers.NewUserController(userService)
 
+	cartRepo := repository.NewCartRepository()
+	cartService := services.NewCartService(cartRepo)
+	cartController := controllers.NewCartController(cartService)
+
 	// Get the router
-	r := routes.SetupRouter(productController, categoryController, userController)
+	r := routes.SetupRouter(productController, categoryController, userController, cartController)
 
 	port := os.Getenv("PORT")
 	if port == "" {
