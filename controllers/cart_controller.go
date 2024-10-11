@@ -11,64 +11,64 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserController struct {
-	service services.UserService
+type CartController struct {
+	service services.CartService
 }
 
-func NewUserController(service services.UserService) *UserController {
-	return &UserController{service: service}
+func NewCartController(service services.CartService) *CartController {
+	return &CartController{service: service}
 }
 
-func (p *UserController) CreateUser(c *gin.Context) {
-	var userRequest dto.UserRequest
-	if err := c.ShouldBindJSON(&userRequest); err != nil {
+func (p *CartController) CreateCart(c *gin.Context) {
+	var cartRequest dto.CartRequest
+	if err := c.ShouldBindJSON(&cartRequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	user := mapper.MatchUserRequestToUser(userRequest)
+	cart := mapper.MatchCartRequestToCart(cartRequest)
 
-	createdUser, err := p.service.CreateUser(c.Request.Context(), user)
+	createdCart, err := p.service.CreateCart(c.Request.Context(), cart)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, createdUser)
+	c.JSON(http.StatusOK, createdCart)
 }
 
-func (p *UserController) UpdateUser(c *gin.Context) {
+func (p *CartController) UpdateCart(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	var userRequest dto.UserRequest
-	if err := c.ShouldBindJSON(&userRequest); err != nil {
+	var cartRequest dto.CartRequest
+	if err := c.ShouldBindJSON(&cartRequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	user := mapper.MatchUserRequestToUser(userRequest)
+	cart := mapper.MatchCartRequestToCart(cartRequest)
 
-	createdUser, err := p.service.UpdateUser(c.Request.Context(), id, user)
+	createdCart, err := p.service.UpdateCart(c.Request.Context(), id, cart)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, createdUser)
+	c.JSON(http.StatusOK, createdCart)
 }
 
-func (p *UserController) DeleteUser(c *gin.Context) {
+func (p *CartController) DeleteCart(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	deletedId, err := p.service.DeleteUser(c.Request.Context(), id)
+	deletedId, err := p.service.DeleteCart(c.Request.Context(), id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -77,16 +77,16 @@ func (p *UserController) DeleteUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"id": deletedId})
 }
 
-func (p *UserController) GetUserById(c *gin.Context) {
+func (p *CartController) GetCartById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	user, err := p.service.GetUserById(c.Request.Context(), id)
+	cart, err := p.service.GetCartById(c.Request.Context(), id)
 	if err != nil {
-		if err == repository.ErrUserNotFound {
+		if err == repository.ErrCartNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 			return
 		}
@@ -95,20 +95,23 @@ func (p *UserController) GetUserById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, cart)
 }
 
-func (p *UserController) GetAllUsers(c *gin.Context) {
+func (p *CartController) GetAllCarts(c *gin.Context) {
 
 	limitStr := c.Query("limit")
-	username := c.Query("username")
-	city := c.Query("city")
 	sortBy := c.Query("sort")
+	userId, err := strconv.Atoi(c.Query("userId"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	users, err := p.service.GetAllUsers(c.Request.Context(), username, city, limitStr, sortBy)
+	carts, err := p.service.GetAllCarts(c.Request.Context(), userId, limitStr, sortBy)
 
 	if err != nil {
-		if err == repository.ErrUserNotFound {
+		if err == repository.ErrCartNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 			return
 		}
@@ -117,5 +120,5 @@ func (p *UserController) GetAllUsers(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, users)
+	c.JSON(http.StatusOK, carts)
 }
