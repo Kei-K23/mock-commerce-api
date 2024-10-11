@@ -28,11 +28,6 @@ func NewProductRepository() ProductRepository {
 	return &productRepository{}
 }
 
-func (p *productRepository) DeleteProduct(ctx context.Context, id int) (int, error) {
-	// Simulate the delete data. This process will not actually delete data in to database
-	return id, nil
-}
-
 func (p *productRepository) CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error) {
 	// Simulate the create data. This process will not actually create data in to database
 	return &models.Product{
@@ -171,4 +166,9 @@ func (p *productRepository) GetAllProducts(ctx context.Context, title, category,
 	}
 
 	return products, nil
+}
+
+func (p *productRepository) DeleteProduct(ctx context.Context, id int) (int, error) {
+	// Simulate the delete data. This process will not actually delete data in to database
+	return id, nil
 }

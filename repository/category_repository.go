@@ -19,6 +19,7 @@ type CategoryRepository interface {
 	UpdateCategory(ctx context.Context, id int, category *models.Category) (*models.Category, error)
 	GetCategoryById(ctx context.Context, id int) (*models.Category, error)
 	GetAllCategories(ctx context.Context, title, limitStr, sortBy string) ([]models.Category, error)
+	DeleteCategory(ctx context.Context, id int) (int, error)
 }
 
 type categoryRepository struct{}
@@ -130,4 +131,8 @@ func (p *categoryRepository) GetAllCategories(ctx context.Context, title, limitS
 	}
 
 	return categories, nil
+}
+
+func (p *categoryRepository) DeleteCategory(ctx context.Context, id int) (int, error) {
+	return id, nil
 }

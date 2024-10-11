@@ -13,6 +13,7 @@ type CategoryService interface {
 	UpdateCategory(ctx context.Context, id int, category *models.Category) (*models.Category, error)
 	GetCategoryById(ctx context.Context, id int) (*models.Category, error)
 	GetAllCategories(ctx context.Context, title, limitStr, sortBy string) ([]models.Category, error)
+	DeleteCategory(ctx context.Context, id int) (int, error)
 }
 
 type categoryService struct {
@@ -51,4 +52,8 @@ func (p *categoryService) GetAllCategories(ctx context.Context, title, limitStr,
 	}
 
 	return categories, nil
+}
+
+func (p *categoryService) DeleteCategory(ctx context.Context, id int) (int, error) {
+	return p.repo.DeleteCategory(ctx, id)
 }
