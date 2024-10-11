@@ -16,6 +16,7 @@ var ErrCategoryNotFound = errors.New("category not found")
 
 type CategoryRepository interface {
 	CreateCategory(ctx context.Context, category *models.Category) (*models.Category, error)
+	UpdateCategory(ctx context.Context, id int, category *models.Category) (*models.Category, error)
 	GetCategoryById(ctx context.Context, id int) (*models.Category, error)
 	GetAllCategories(ctx context.Context, title, limitStr, sortBy string) ([]models.Category, error)
 }
@@ -30,6 +31,15 @@ func (p *categoryRepository) CreateCategory(ctx context.Context, category *model
 	// Simulate the create data. This process will not actually create data in to database
 	return &models.Category{
 		ID:          11,
+		Title:       category.Title,
+		Description: category.Description,
+		Image:       category.Image,
+	}, nil
+}
+
+func (p *categoryRepository) UpdateCategory(ctx context.Context, id int, category *models.Category) (*models.Category, error) {
+	return &models.Category{
+		ID:          id,
 		Title:       category.Title,
 		Description: category.Description,
 		Image:       category.Image,

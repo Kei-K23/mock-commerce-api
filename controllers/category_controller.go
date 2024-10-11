@@ -37,6 +37,30 @@ func (p *CategoryController) CreateCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, createdCategory)
 }
 
+func (p *CategoryController) UpdateCategory(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var categoryRequest dto.CategoryRequest
+	if err := c.ShouldBindJSON(&categoryRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	category := mapper.MatchCategoryRequestToCategory(categoryRequest)
+
+	updatedCategory, err := p.service.UpdateCategory(c.Request.Context(), id, category)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedCategory)
+}
+
 func (p *CategoryController) GetCategoryById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

@@ -9,7 +9,8 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 	r := gin.Default()
 
 	// Category routes
-	r.POST("/products", categoryController.CreateCategory)
+	r.POST("/category", categoryController.CreateCategory)
+	r.PATCH("/categories/:id", categoryController.UpdateCategory)
 	r.GET("/categories", categoryController.GetAllProducts)
 	r.GET("/categories/:id", categoryController.GetCategoryById)
 
