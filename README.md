@@ -189,3 +189,15 @@ Fields:
 #### DELETE:
 
 - `/categories/1` (Delete a category by ID)
+
+## Acknowledgement
+
+This project is highly inspired by [FakeStoreAPI](https://fakestoreapi.com/) and give credit. I improved most of the endpoints and added more resources. Original FakeStoreAPI is build with **NodeJS + Express** but I use **Go + Gin** to improve performance and simplicity.
+
+## Contributions
+
+All contributions are very welcome. You can contribute to the project by adding new features, improve code quality and fix bugs. Please open issues or make PR to make changes.
+
+## LICENSE
+
+MockCommerceAPI is under [MIT-LICENSE](/LICENSE).
