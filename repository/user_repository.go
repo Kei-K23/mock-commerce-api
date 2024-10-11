@@ -19,7 +19,7 @@ type UserRepository interface {
 	UpdateUser(ctx context.Context, id int, user *models.User) (*models.User, error)
 	DeleteUser(ctx context.Context, id int) (int, error)
 	GetUserById(ctx context.Context, id int) (*models.User, error)
-	GetAllUsers(ctx context.Context, title, category, limitStr, sortBy string) ([]models.User, error)
+	GetAllUsers(ctx context.Context, username, city, limitStr, sortBy string) ([]models.User, error)
 }
 
 type userRepository struct{}

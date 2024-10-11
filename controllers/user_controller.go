@@ -101,11 +101,11 @@ func (p *UserController) GetUserById(c *gin.Context) {
 func (p *UserController) GetAllUsers(c *gin.Context) {
 
 	limitStr := c.Query("limit")
-	title := c.Query("title")
-	category := c.Query("category")
+	username := c.Query("username")
+	city := c.Query("city")
 	sortBy := c.Query("sort")
 
-	products, err := p.service.GetAllUsers(c.Request.Context(), title, category, limitStr, sortBy)
+	products, err := p.service.GetAllUsers(c.Request.Context(), username, city, limitStr, sortBy)
 
 	if err != nil {
 		if err == repository.ErrUserNotFound {
