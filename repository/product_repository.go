@@ -16,6 +16,7 @@ var ErrProductNotFound = errors.New("product not found")
 
 type ProductRepository interface {
 	CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error)
+	UpdateProduct(ctx context.Context, id int, product *models.Product) (*models.Product, error)
 	GetProductById(ctx context.Context, id int) (*models.Product, error)
 	GetAllProducts(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Product, error)
 }
@@ -26,6 +27,18 @@ func (p *productRepository) CreateProduct(ctx context.Context, product *models.P
 	// Simulate the create data. This process will not actually create data in to database
 	return &models.Product{
 		ID:          11,
+		Title:       product.Title,
+		Description: product.Description,
+		Category:    product.Category,
+		Image:       product.Image,
+		Price:       product.Price,
+	}, nil
+}
+
+func (p *productRepository) UpdateProduct(ctx context.Context, id int, product *models.Product) (*models.Product, error) {
+	// Simulate the update data. This process will not actually update data in to database
+	return &models.Product{
+		ID:          id,
 		Title:       product.Title,
 		Description: product.Description,
 		Category:    product.Category,

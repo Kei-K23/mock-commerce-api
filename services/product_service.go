@@ -10,6 +10,7 @@ import (
 
 type ProductService interface {
 	CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error)
+	UpdateProduct(ctx context.Context, id int, product *models.Product) (*models.Product, error)
 	GetProductById(ctx context.Context, id int) (*models.Product, error)
 	GetAllProducts(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Product, error)
 }
@@ -26,6 +27,11 @@ func NewProductService(repo repository.ProductRepository) ProductService {
 // CreateProduct implements ProductService.
 func (p *productService) CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error) {
 	return p.repo.CreateProduct(ctx, product)
+}
+
+// CreateProduct implements ProductService.
+func (p *productService) UpdateProduct(ctx context.Context, id int, product *models.Product) (*models.Product, error) {
+	return p.repo.UpdateProduct(ctx, id, product)
 }
 
 func (p *productService) GetProductById(ctx context.Context, id int) (*models.Product, error) {
