@@ -17,11 +17,21 @@ var ErrProductNotFound = errors.New("product not found")
 type ProductRepository interface {
 	CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error)
 	UpdateProduct(ctx context.Context, id int, product *models.Product) (*models.Product, error)
+	DeleteProduct(ctx context.Context, id int) (int, error)
 	GetProductById(ctx context.Context, id int) (*models.Product, error)
 	GetAllProducts(ctx context.Context, title, category, limitStr, sortBy string) ([]models.Product, error)
 }
 
 type productRepository struct{}
+
+func NewProductRepository() ProductRepository {
+	return &productRepository{}
+}
+
+func (p *productRepository) DeleteProduct(ctx context.Context, id int) (int, error) {
+	// Simulate the delete data. This process will not actually delete data in to database
+	return id, nil
+}
 
 func (p *productRepository) CreateProduct(ctx context.Context, product *models.Product) (*models.Product, error) {
 	// Simulate the create data. This process will not actually create data in to database
@@ -45,10 +55,6 @@ func (p *productRepository) UpdateProduct(ctx context.Context, id int, product *
 		Image:       product.Image,
 		Price:       product.Price,
 	}, nil
-}
-
-func NewProductRepository() ProductRepository {
-	return &productRepository{}
 }
 
 func (p *productRepository) GetProductById(ctx context.Context, id int) (*models.Product, error) {
