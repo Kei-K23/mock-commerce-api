@@ -34,7 +34,7 @@ func (p *CartController) CreateCart(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, createdCart)
+	c.JSON(http.StatusCreated, createdCart)
 }
 
 func (p *CartController) UpdateCart(c *gin.Context) {

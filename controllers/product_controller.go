@@ -34,7 +34,7 @@ func (p *ProductController) CreateProduct(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, createdProduct)
+	c.JSON(http.StatusCreated, createdProduct)
 }
 
 func (p *ProductController) UpdateProduct(c *gin.Context) {

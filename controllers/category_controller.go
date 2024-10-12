@@ -34,7 +34,7 @@ func (p *CategoryController) CreateCategory(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, createdCategory)
+	c.JSON(http.StatusCreated, createdCategory)
 }
 
 func (p *CategoryController) UpdateCategory(c *gin.Context) {

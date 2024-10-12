@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController) *gin.Engine {
+func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController, jwtController *controllers.JWTController) *gin.Engine {
 	r := gin.Default()
 
 	// Version 1
@@ -42,6 +42,9 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 		v1.DELETE("/carts/:id", cartController.DeleteCart)
 		v1.GET("/carts", cartController.GetAllCarts)
 		v1.GET("/carts/:id", cartController.GetCartById)
+
+		// Auth routes
+		v1.POST("/auth/login", jwtController.CreateJWT)
 	}
 
 	return r

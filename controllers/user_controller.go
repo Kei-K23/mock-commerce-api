@@ -34,7 +34,7 @@ func (p *UserController) CreateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, createdUser)
+	c.JSON(http.StatusCreated, createdUser)
 }
 
 func (p *UserController) UpdateUser(c *gin.Context) {

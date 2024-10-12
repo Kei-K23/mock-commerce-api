@@ -35,8 +35,12 @@ func main() {
 	cartService := services.NewCartService(cartRepo)
 	cartController := controllers.NewCartController(cartService)
 
+	jwtRepo := repository.NewJWTRepository()
+	jwtService := services.NewJWTService(jwtRepo)
+	jwtController := controllers.NewJWTController(jwtService)
+
 	// Get the router
-	r := routes.SetupRouter(productController, categoryController, userController, cartController)
+	r := routes.SetupRouter(productController, categoryController, userController, cartController, jwtController)
 
 	port := os.Getenv("PORT")
 	if port == "" {
