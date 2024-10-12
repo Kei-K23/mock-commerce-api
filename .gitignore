@@ -9,3 +9,4 @@ go.work
 .env
 bin/
 vendor/
+node_modules/

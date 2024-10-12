@@ -1,5 +1,103 @@
+<!DOCTYPE html>
 <html>
-	<h1>
-		{{ .title }}
-	</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body,
+      :root {
+        background-color: #222;
+        color: #eee;
+      }
+
+      a {
+        color: #eee;
+        text-decoration: none;
+      }
+
+      .main-header {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 30px;
+        font-size: 20px;
+      }
+
+      .btn {
+        background-color: aquamarine;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .btn:hover {
+        background-color: rgb(75, 235, 181);
+        transition: all 0.3s ease-in-out;
+      }
+      .btn-secondary {
+        background-color: aliceblue;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+      .btn-secondary:hover {
+        background-color: rgb(219, 223, 226);
+        transition: all 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="main-header">
+      <a href="#">Logo</a>
+      <nav class="main-nav">
+        <a href="">Home</a>
+        <a href="">Docs</a>
+        <a href="" target="_blank">GitHub</a>
+      </nav>
+    </header>
+    <div style="margin-top: 200px">
+      <h1 style="font-size: 40px; text-align: center; color: aquamarine">
+        MockCommerceAPI
+      </h1>
+      <p
+        style="
+          font-size: 20px;
+          text-align: center;
+          color: #ddd;
+          max-width: 500px;
+          margin: 0 auto;
+          line-height: 30px;
+        "
+      >
+        MockCommerceAPI is a free, fast online RESTFul API that provides
+        realistic data for e-commerce or shopping websites and powered by Go
+      </p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          margin: 20px 10px;
+        "
+      >
+        <button class="btn">View on GitHub</button>
+        <button class="btn-secondary">Read Docs</button>
+      </div>
+    </div>
+  </body>
 </html>
