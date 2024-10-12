@@ -8,37 +8,41 @@ import (
 func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController) *gin.Engine {
 	r := gin.Default()
 
-	// Category routes
-	r.POST("/category", categoryController.CreateCategory)
-	r.PATCH("/categories/:id", categoryController.UpdateCategory)
-	r.PUT("/categories/:id", categoryController.UpdateCategory)
-	r.DELETE("/categories/:id", categoryController.DeleteCategory)
-	r.GET("/categories", categoryController.GetAllProducts)
-	r.GET("/categories/:id", categoryController.GetCategoryById)
+	// Version 1
+	v1 := r.Group("/api/v1")
+	{
+		// Category routes
+		v1.POST("/category", categoryController.CreateCategory)
+		v1.PATCH("/categories/:id", categoryController.UpdateCategory)
+		v1.PUT("/categories/:id", categoryController.UpdateCategory)
+		v1.DELETE("/categories/:id", categoryController.DeleteCategory)
+		v1.GET("/categories", categoryController.GetAllProducts)
+		v1.GET("/categories/:id", categoryController.GetCategoryById)
 
-	// Product routes
-	r.POST("/products", productController.CreateProduct)
-	r.PATCH("/products/:id", productController.UpdateProduct)
-	r.PUT("/products/:id", productController.UpdateProduct)
-	r.DELETE("/products/:id", productController.DeleteProduct)
-	r.GET("/products", productController.GetAllProducts)
-	r.GET("/products/:id", productController.GetProductById)
+		// Product routes
+		v1.POST("/products", productController.CreateProduct)
+		v1.PATCH("/products/:id", productController.UpdateProduct)
+		v1.PUT("/products/:id", productController.UpdateProduct)
+		v1.DELETE("/products/:id", productController.DeleteProduct)
+		v1.GET("/products", productController.GetAllProducts)
+		v1.GET("/products/:id", productController.GetProductById)
 
-	// User routes
-	r.POST("/users", userController.CreateUser)
-	r.PATCH("/users/:id", userController.UpdateUser)
-	r.PUT("/users/:id", userController.UpdateUser)
-	r.DELETE("/users/:id", userController.DeleteUser)
-	r.GET("/users", userController.GetAllUsers)
-	r.GET("/users/:id", userController.GetUserById)
+		// User routes
+		v1.POST("/users", userController.CreateUser)
+		v1.PATCH("/users/:id", userController.UpdateUser)
+		v1.PUT("/users/:id", userController.UpdateUser)
+		v1.DELETE("/users/:id", userController.DeleteUser)
+		v1.GET("/users", userController.GetAllUsers)
+		v1.GET("/users/:id", userController.GetUserById)
 
-	// Cart routes
-	r.POST("/carts", cartController.CreateCart)
-	r.PATCH("/carts/:id", cartController.UpdateCart)
-	r.PUT("/carts/:id", cartController.UpdateCart)
-	r.DELETE("/carts/:id", cartController.DeleteCart)
-	r.GET("/carts", cartController.GetAllCarts)
-	r.GET("/carts/:id", cartController.GetCartById)
+		// Cart routes
+		v1.POST("/carts", cartController.CreateCart)
+		v1.PATCH("/carts/:id", cartController.UpdateCart)
+		v1.PUT("/carts/:id", cartController.UpdateCart)
+		v1.DELETE("/carts/:id", cartController.DeleteCart)
+		v1.GET("/carts", cartController.GetAllCarts)
+		v1.GET("/carts/:id", cartController.GetCartById)
+	}
 
 	return r
 }
