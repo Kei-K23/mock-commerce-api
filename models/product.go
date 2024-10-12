@@ -7,4 +7,5 @@ type Product struct {
 	Category    string  `json:"category"`
 	Image       *string `json:"image"`
 	Price       int     `json:"price"`
+	Rating      int     `json:"rating"`
 }

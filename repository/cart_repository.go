@@ -83,6 +83,7 @@ func (p *cartRepository) GetCartById(ctx context.Context, id int) (*models.Cart,
 			cat.title AS category, 
 			p.image AS image, 
 			p.price AS price, 
+			p.rating AS rating,
 			cp.quantity AS quantity
 		FROM 
 			cart_products cp
@@ -115,6 +116,7 @@ func (p *cartRepository) GetCartById(ctx context.Context, id int) (*models.Cart,
 			&cartItem.Category,
 			&cartItem.Image,
 			&cartItem.Price,
+			&cartItem.Rating,
 			&cartItem.Quantity,
 		); err != nil {
 			if err == pgx.ErrNoRows {
@@ -204,7 +206,8 @@ func (p *cartRepository) GetAllCarts(ctx context.Context, userId int, limitStr, 
 			p.description AS description, 
 			cat.title AS category, 
 			p.image AS image, 
-			p.price AS price, 
+			p.price AS price,
+			p.rating AS rating,
 			cp.quantity AS quantity
 		FROM 
 			cart_products cp
@@ -237,6 +240,7 @@ func (p *cartRepository) GetAllCarts(ctx context.Context, userId int, limitStr, 
 				&cartItem.Category,
 				&cartItem.Image,
 				&cartItem.Price,
+				&cartItem.Rating,
 				&cartItem.Quantity,
 			); err != nil {
 				if err == pgx.ErrNoRows {

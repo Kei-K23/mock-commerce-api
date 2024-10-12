@@ -37,6 +37,7 @@ func (p *productRepository) CreateProduct(ctx context.Context, product *models.P
 		Category:    product.Category,
 		Image:       product.Image,
 		Price:       product.Price,
+		Rating:      product.Rating,
 	}, nil
 }
 
@@ -49,6 +50,7 @@ func (p *productRepository) UpdateProduct(ctx context.Context, id int, product *
 		Category:    product.Category,
 		Image:       product.Image,
 		Price:       product.Price,
+		Rating:      product.Rating,
 	}, nil
 }
 
@@ -60,7 +62,8 @@ func (p *productRepository) GetProductById(ctx context.Context, id int) (*models
 			p.description, 
 			c.title AS category,
 			p.image, 
-			p.price 
+			p.price,
+			p.rating
 		FROM 
 			products p 
 		JOIN 
@@ -79,6 +82,7 @@ func (p *productRepository) GetProductById(ctx context.Context, id int) (*models
 		&product.Category,
 		&product.Image, // This can now be NULL
 		&product.Price,
+		&product.Rating,
 	); err != nil {
 		if err == pgx.ErrNoRows {
 			return nil, ErrProductNotFound
@@ -100,7 +104,8 @@ func (p *productRepository) GetAllProducts(ctx context.Context, title, category,
 			p.description, 
 			c.title AS category,
 			p.image, 
-			p.price 
+			p.price,
+			p.rating
 		FROM products p
 		JOIN categories c ON p.category_id = c.id`
 
@@ -149,6 +154,7 @@ func (p *productRepository) GetAllProducts(ctx context.Context, title, category,
 			&product.Category,
 			&product.Image,
 			&product.Price,
+			&product.Rating,
 		); err != nil {
 			if err == pgx.ErrNoRows {
 				return nil, ErrProductNotFound

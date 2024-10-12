@@ -134,3 +134,34 @@ func (p *CartController) GetAllCarts(c *gin.Context) {
 
 	c.JSON(http.StatusOK, carts)
 }
+
+func (p *CartController) GetAllCartsByUserId(c *gin.Context) {
+	var userId int
+	var err error
+
+	limitStr := c.Query("limit")
+	sortBy := c.Query("sort")
+	userIdStr := c.Param("userId")
+
+	if userIdStr != "" {
+		userId, err = strconv.Atoi(userIdStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	carts, err := p.service.GetAllCarts(c.Request.Context(), userId, limitStr, sortBy)
+
+	if err != nil {
+		if err == repository.ErrCartNotFound {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, carts)
+}

@@ -119,3 +119,25 @@ func (p *ProductController) GetAllProducts(c *gin.Context) {
 
 	c.JSON(http.StatusOK, products)
 }
+
+func (p *ProductController) GetAllProductsByCategory(c *gin.Context) {
+
+	category := c.Param("category")
+	limitStr := c.Query("limit")
+	title := c.Query("title")
+	sortBy := c.Query("sort")
+
+	products, err := p.service.GetAllProducts(c.Request.Context(), title, category, limitStr, sortBy)
+
+	if err != nil {
+		if err == repository.ErrProductNotFound {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, products)
+}

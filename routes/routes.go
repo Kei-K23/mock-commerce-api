@@ -1,12 +1,15 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/Kei-K23/go-ecommerce-api/controllers"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController, jwtController *controllers.JWTController) *gin.Engine {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 
 	// Version 1
 	v1 := r.Group("/api/v1")
@@ -26,6 +29,7 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 		v1.DELETE("/products/:id", productController.DeleteProduct)
 		v1.GET("/products", productController.GetAllProducts)
 		v1.GET("/products/:id", productController.GetProductById)
+		v1.GET("/products/category/:category", productController.GetAllProductsByCategory)
 
 		// User routes
 		v1.POST("/users", userController.CreateUser)
@@ -42,9 +46,19 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 		v1.DELETE("/carts/:id", cartController.DeleteCart)
 		v1.GET("/carts", cartController.GetAllCarts)
 		v1.GET("/carts/:id", cartController.GetCartById)
+		v1.GET("/carts/user/:userId", cartController.GetAllCartsByUserId)
 
 		// Auth routes
 		v1.POST("/auth/login", jwtController.CreateJWT)
+	}
+
+	// Documentation HTML site
+	{
+		r.GET("/", func(c *gin.Context) {
+			c.HTML(http.StatusOK, "index.templ", gin.H{
+				"title": "Hello from Templ + Go + Gin",
+			})
+		})
 	}
 
 	return r
