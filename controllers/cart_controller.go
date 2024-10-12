@@ -78,10 +78,16 @@ func (p *CartController) DeleteCart(c *gin.Context) {
 }
 
 func (p *CartController) GetCartById(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	idStr := c.Param("id")
+	var id int
+	var err error
+
+	if idStr != "" {
+		id, err = strconv.Atoi(idStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	cart, err := p.service.GetCartById(c.Request.Context(), id)
@@ -99,13 +105,19 @@ func (p *CartController) GetCartById(c *gin.Context) {
 }
 
 func (p *CartController) GetAllCarts(c *gin.Context) {
+	var userId int
+	var err error
 
 	limitStr := c.Query("limit")
 	sortBy := c.Query("sort")
-	userId, err := strconv.Atoi(c.Query("userId"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	userIdStr := c.Query("userId")
+
+	if userIdStr != "" {
+		userId, err = strconv.Atoi(userIdStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	carts, err := p.service.GetAllCarts(c.Request.Context(), userId, limitStr, sortBy)

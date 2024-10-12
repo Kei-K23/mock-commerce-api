@@ -52,7 +52,7 @@ func (p *cartRepository) GetCartById(ctx context.Context, id int) (*models.Cart,
 		SELECT 
 			c.id, 
 			c.user_id, 
-			c.created_at, 
+			c.created_at
 		FROM 
 			carts c
 		WHERE 
@@ -80,9 +80,9 @@ func (p *cartRepository) GetCartById(ctx context.Context, id int) (*models.Cart,
 			p.id AS id, 
 			p.title AS title, 
 			p.description AS description, 
-			c.title AS category,
+			cat.title AS category, 
 			p.image AS image, 
-			p.price AS price,
+			p.price AS price, 
 			cp.quantity AS quantity
 		FROM 
 			cart_products cp
@@ -91,9 +91,11 @@ func (p *cartRepository) GetCartById(ctx context.Context, id int) (*models.Cart,
 		JOIN 
 			products p ON cp.product_id = p.id
 		JOIN 
-        	categories cat ON p.category_id = cat.id`
+			categories cat ON p.category_id = cat.id
+		WHERE 
+			cp.cart_id = $1`
 
-	rows, err := db.Pool.Query(ctx, cartItemsQuery)
+	rows, err := db.Pool.Query(ctx, cartItemsQuery, id)
 	if err != nil {
 		log.Fatalln("Error fetching all cart items: ", err)
 		return nil, err
@@ -136,7 +138,7 @@ func (p *cartRepository) GetAllCarts(ctx context.Context, userId int, limitStr, 
 		SELECT 
 			c.id, 
 			c.user_id, 
-			c.created_at, 
+			c.created_at
 		FROM 
 			carts c`
 
@@ -192,6 +194,62 @@ func (p *cartRepository) GetAllCarts(ctx context.Context, userId int, limitStr, 
 	if err = rows.Err(); err != nil {
 		log.Println("Error with cart rows: ", err)
 		return nil, err
+	}
+
+	for i := range carts {
+		cartItemsQuery := `
+		SELECT 
+			p.id AS id, 
+			p.title AS title, 
+			p.description AS description, 
+			cat.title AS category, 
+			p.image AS image, 
+			p.price AS price, 
+			cp.quantity AS quantity
+		FROM 
+			cart_products cp
+		JOIN 
+			carts c ON cp.cart_id = c.id
+		JOIN 
+			products p ON cp.product_id = p.id
+		JOIN 
+			categories cat ON p.category_id = cat.id
+		WHERE 
+			cp.cart_id = $1`
+
+		rows, err := db.Pool.Query(ctx, cartItemsQuery, carts[i].ID)
+		if err != nil {
+			log.Fatalln("Error fetching all cart items: ", err)
+			return nil, err
+		}
+
+		defer rows.Close()
+
+		var cartItems []models.CartProduct
+
+		for rows.Next() {
+			var cartItem models.CartProduct
+
+			if err := rows.Scan(
+				&cartItem.ID,
+				&cartItem.Title,
+				&cartItem.Description,
+				&cartItem.Category,
+				&cartItem.Image,
+				&cartItem.Price,
+				&cartItem.Quantity,
+			); err != nil {
+				if err == pgx.ErrNoRows {
+					return nil, ErrCartItemNotFound
+				}
+				log.Printf("Error when fetching cart items: %v\n", err)
+				return nil, err
+			}
+
+			cartItems = append(cartItems, cartItem)
+		}
+
+		carts[i].Products = cartItems
 	}
 
 	return carts, nil
