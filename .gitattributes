@@ -1,46 +1,10 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
-* text=auto
+# Mark .html, .css, and .templ files as Go
+*.html linguist-language=Go
+*.css linguist-language=Go
+*.templ linguist-language=Go
 
-* linguist-vendored
-*.go linguist-vendored=false
-*.templ linguist-vendored=false
+# Mark Go files as Go (default behavior, but you can reinforce it)
+*.go linguist-language=Go
 
-###############################################################################
-# Set default behavior for command prompt diff.
-#
-# This is need for earlier builds of msysgit that does not have it on by
-# Note: This is only used by command line
-###############################################################################
-#*.go        diff=go
-#*.templ     diff=go
-
-###############################################################################
-# behavior for image files
-#
-# image files are treated as binary by default.
-###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
-
-###############################################################################
-# diff behavior for common document formats
-# 
-# Convert binary document formats to text before diffing them. This feature
-# is only available from the command line. Turn it on by uncommenting the 
-# entries below.
-###############################################################################
-#*.doc   diff=astextplain
-#*.DOC   diff=astextplain
-#*.docx  diff=astextplain
-#*.DOCX  diff=astextplain
-#*.dot   diff=astextplain
-#*.DOT   diff=astextplain
-#*.pdf   diff=astextplain
-#*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
-#*.RTF   diff=astextplain
-#*.templ   diff=go
-#*.go   diff=go
+# Optionally, exclude dependencies (like /vendor) from stats
+vendor/* linguist-vendored
