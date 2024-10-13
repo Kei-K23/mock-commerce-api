@@ -100,15 +100,25 @@ func (p *ReviewController) GetReviewById(c *gin.Context) {
 
 func (p *ReviewController) GetAllReviews(c *gin.Context) {
 
-	userId, err := strconv.Atoi(c.Query("user_id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	var userId, productId int
+	var err error
+
+	userIdStr := c.Query("user_id")
+	if userIdStr != "" {
+		userId, err = strconv.Atoi(userIdStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
-	productId, err := strconv.Atoi(c.Query("product_id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+
+	productIdStr := c.Query("product_id")
+	if productIdStr != "" {
+		productId, err = strconv.Atoi(productIdStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	limitStr := c.Query("limit")

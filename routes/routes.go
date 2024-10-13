@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController, jwtController *controllers.JWTController) *gin.Engine {
+func SetupRouter(productController *controllers.ProductController, categoryController *controllers.CategoryController, userController *controllers.UserController, cartController *controllers.CartController, jwtController *controllers.JWTController, reviewController *controllers.ReviewController) *gin.Engine {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 
@@ -15,7 +15,7 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 	v1 := r.Group("/api/v1")
 	{
 		// Category routes
-		v1.POST("/category", categoryController.CreateCategory)
+		v1.POST("/categories", categoryController.CreateCategory)
 		v1.PATCH("/categories/:id", categoryController.UpdateCategory)
 		v1.PUT("/categories/:id", categoryController.UpdateCategory)
 		v1.DELETE("/categories/:id", categoryController.DeleteCategory)
@@ -47,6 +47,14 @@ func SetupRouter(productController *controllers.ProductController, categoryContr
 		v1.GET("/carts", cartController.GetAllCarts)
 		v1.GET("/carts/:id", cartController.GetCartById)
 		v1.GET("/carts/user/:userId", cartController.GetAllCartsByUserId)
+
+		// Reviews routes
+		v1.POST("/reviews", reviewController.CreateReview)
+		v1.PATCH("/reviews/:id", reviewController.UpdateReview)
+		v1.PUT("/reviews/:id", reviewController.UpdateReview)
+		v1.DELETE("/reviews/:id", reviewController.DeleteReview)
+		v1.GET("/reviews", reviewController.GetAllReviews)
+		v1.GET("/reviews/:id", reviewController.GetReviewById)
 
 		// Auth routes
 		v1.POST("/auth/login", jwtController.CreateJWT)
