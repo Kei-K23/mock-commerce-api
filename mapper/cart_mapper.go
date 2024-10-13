@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"github.com/Kei-K23/go-ecommerce-api/dto"
-	"github.com/Kei-K23/go-ecommerce-api/models"
+	"github.com/Kei-K23/mock-commerce-api/dto"
+	"github.com/Kei-K23/mock-commerce-api/models"
 )
 
 func MatchCartRequestToCart(req dto.CartRequest) *models.Cart {

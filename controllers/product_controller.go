@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Kei-K23/go-ecommerce-api/dto"
-	"github.com/Kei-K23/go-ecommerce-api/mapper"
-	"github.com/Kei-K23/go-ecommerce-api/repository"
-	"github.com/Kei-K23/go-ecommerce-api/services"
+	"github.com/Kei-K23/mock-commerce-api/dto"
+	"github.com/Kei-K23/mock-commerce-api/mapper"
+	"github.com/Kei-K23/mock-commerce-api/repository"
+	"github.com/Kei-K23/mock-commerce-api/services"
 	"github.com/gin-gonic/gin"
 )
 

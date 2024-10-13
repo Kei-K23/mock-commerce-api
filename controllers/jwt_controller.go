@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Kei-K23/go-ecommerce-api/dto"
-	"github.com/Kei-K23/go-ecommerce-api/services"
+	"github.com/Kei-K23/mock-commerce-api/dto"
+	"github.com/Kei-K23/mock-commerce-api/services"
 	"github.com/gin-gonic/gin"
 )
 

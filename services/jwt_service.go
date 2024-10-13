@@ -3,8 +3,8 @@ package services
 import (
 	"context"
 
-	"github.com/Kei-K23/go-ecommerce-api/dto"
-	"github.com/Kei-K23/go-ecommerce-api/repository"
+	"github.com/Kei-K23/mock-commerce-api/dto"
+	"github.com/Kei-K23/mock-commerce-api/repository"
 )
 
 type JWTService interface {

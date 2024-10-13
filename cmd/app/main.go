@@ -5,11 +5,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/Kei-K23/go-ecommerce-api/controllers"
-	"github.com/Kei-K23/go-ecommerce-api/db"
-	"github.com/Kei-K23/go-ecommerce-api/repository"
-	"github.com/Kei-K23/go-ecommerce-api/routes"
-	"github.com/Kei-K23/go-ecommerce-api/services"
+	"github.com/Kei-K23/mock-commerce-api/controllers"
+	"github.com/Kei-K23/mock-commerce-api/db"
+	"github.com/Kei-K23/mock-commerce-api/repository"
+	"github.com/Kei-K23/mock-commerce-api/routes"
+	"github.com/Kei-K23/mock-commerce-api/services"
 )
 
 func main() {

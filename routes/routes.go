@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/Kei-K23/go-ecommerce-api/controllers"
+	"github.com/Kei-K23/mock-commerce-api/controllers"
 	"github.com/gin-gonic/gin"
 )
 

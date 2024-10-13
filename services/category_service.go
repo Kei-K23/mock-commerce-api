@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/Kei-K23/go-ecommerce-api/models"
-	"github.com/Kei-K23/go-ecommerce-api/repository"
+	"github.com/Kei-K23/mock-commerce-api/models"
+	"github.com/Kei-K23/mock-commerce-api/repository"
 )
 
 type CategoryService interface {

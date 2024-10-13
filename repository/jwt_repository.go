@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	"github.com/Kei-K23/go-ecommerce-api/db"
-	"github.com/Kei-K23/go-ecommerce-api/dto"
-	"github.com/Kei-K23/go-ecommerce-api/models"
-	"github.com/Kei-K23/go-ecommerce-api/utils"
+	"github.com/Kei-K23/mock-commerce-api/db"
+	"github.com/Kei-K23/mock-commerce-api/dto"
+	"github.com/Kei-K23/mock-commerce-api/models"
+	"github.com/Kei-K23/mock-commerce-api/utils"
 	"github.com/jackc/pgx/v5"
 )
 

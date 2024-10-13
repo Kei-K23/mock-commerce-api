@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	"github.com/Kei-K23/go-ecommerce-api/models"
+	"github.com/Kei-K23/mock-commerce-api/models"
 )
 
 type CartRequest struct {
